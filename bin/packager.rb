@@ -5,7 +5,7 @@ require "packager"
 abort("Please choose a build using BUILD") unless ENV["BUILD"]
 abort("Please set VERSION") unless ENV["VERSION"]
 abort("Please set ARTIFACTS") unless ENV["ARTIFACTS"]
-abort("Please set PACKAGE") unless ENV["PACKAGE"]
+abort("Please set PACKAGE") unless ENV["PACKAGE"] unless ENV["BINARY_ONLY"]
 
 if ENV["SOURCE_DIR"]
   Dir.chdir(ENV["SOURCE_DIR"])
@@ -13,7 +13,7 @@ end
 
 abort("Please ensure package is a directory") unless File.directory?("packager")
 abort("Please ensure packager/buildspec.yaml exist") unless File.exist?("packager/buildspec.yaml")
-abort("Artifacts directory %s does not exist") unless File.directory?(ENV["ARTIFACTS"])
+abort("Artifacts directory %s does not exist" % ENV["ARTIFACTS"]) unless File.directory?(ENV["ARTIFACTS"])
 
 if ENV["BUILD_CACHE"]
   abort("BUILD_CACHE is set but does not exist") unless File.directory?(ENV["BUILD_CACHE"])
@@ -38,6 +38,11 @@ begin
   )
 
   targets.validate!
+
+  if ENV["BINARY_ONLY"]
+    targets.build!
+    exit
+  end
 
   packages = Packager::Packages.new(
     ENV["VERSION"],

@@ -59,12 +59,14 @@ class Packager
         raise("Could not build %s: exited %d" % [self, $?.exitstatus])
       end
 
+      FileUtils.cp(output, fqoutput)
+
       raise("Build failed: no output produced") unless built?
 
       puts
-      system("ls -l %s" % fqoutput)
-      system("file %s" % fqoutput)
-      system("ldd %s" % fqoutput)
+      system("ls -l %s" % output)
+      system("file %s" % output)
+      system("ldd %s" % output)
       puts
       puts "   >>> built %s" % fqoutput
     end
@@ -74,7 +76,7 @@ class Packager
     end
 
     def sha
-      return ENV["CIRCLE_SHA1"] if ENV["CIRCLE_SHA1"]
+      return ENV["SHA1"] if ENV["SHA1"]
 
       rev = `git rev-parse --short HEAD 2>&1`.chomp
 
@@ -131,7 +133,7 @@ class Packager
 
       flags = build_flags
 
-      args << "-o" << fqoutput
+      args << "-o" << output
       args << "--tags" << @tags.join(",") unless @tags.empty?
       args << "-ldflags" << "'%s'" % flags.join(" ") unless flags.empty?
 

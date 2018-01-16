@@ -11,14 +11,17 @@ class Packager
       @template_conf = {}
     end
 
-    def build!(target)
+    def build!(target, binary_only=false)
       build_binary
-      copy_source
-      copy_template
-      sed_template
-      create_tarball
-      create_package
-      copy_artifacts(target)
+
+      unless binary_only
+        copy_source
+        copy_template
+        sed_template
+        create_tarball
+        create_package
+        copy_artifacts(target)
+      end
     end
 
     def copy_source
@@ -42,9 +45,11 @@ class Packager
 
       puts "  >>> copying artifacts %s" % artifacts_glob
 
-      Dir.glob(artifacts_glob).each do |artifact|
-      	puts "     >>> %s => %s" % [artifact, target]
-        FileUtils.cp_r(artifact, target)
+      Array(artifacts_glob).each do |glob|
+        Dir.glob(glob).each do |artifact|
+          puts "     >>> %s => %s" % [artifact, target]
+          FileUtils.cp_r(artifact, target)
+        end
       end
     end
 
