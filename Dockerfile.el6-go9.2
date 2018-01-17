@@ -1,0 +1,22 @@
+FROM centos:6
+
+RUN yum install -y rpm-build ruby wget && \
+    yum clean all
+
+RUN wget -q https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz && \
+    rm -f go1.9.2.linux-amd64.tar.gz
+
+WORKDIR /build/source
+
+VOLUME /go
+VOLUME /build/artifacts
+
+ENV RUBYLIB /packager/lib
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin
+ENV GOPATH /go
+
+COPY lib /packager/lib/
+COPY bin /packager/bin/
+
+CMD /packager/bin/packager.rb
