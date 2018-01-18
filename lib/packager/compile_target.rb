@@ -15,6 +15,7 @@ class Packager
       @output = props["output"]
       @flags = props["flags"] || {}
       @tags = props["tags"] || []
+      @precommands = props["pre"] || []
 
       @time = Time.now.strftime("%F %T %z")
       @buildid = OpenSSL::Random.random_bytes(16).unpack("H*")[0]
@@ -47,6 +48,13 @@ class Packager
       end
 
       puts "   >>> building %s in %s" % [self, Dir.pwd]
+
+      @precommands.each do |cmd|
+        puts "     >>> running pre command: %s" % cmd
+        unless system(cmd)
+          raise("pre command %s failed with exit code %d" % [cmd, $?.exitstatus])
+        end
+      end
 
       cmd = build_cmd.join(" ")
 
