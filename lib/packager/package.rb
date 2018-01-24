@@ -45,10 +45,12 @@ class Packager
 
       puts "  >>> copying artifacts %s" % artifacts_glob
 
-      Array(artifacts_glob).each do |glob|
-        Dir.glob(glob).each do |artifact|
-          puts "     >>> %s => %s" % [artifact, target]
-          FileUtils.cp_r(artifact, target)
+      Dir.chdir(mktmpdir) do
+        Array(artifacts_glob).each do |glob|
+          Dir.glob(glob).each do |artifact|
+            puts "     >>> %s => %s" % [artifact, target]
+            FileUtils.cp_r(artifact, target)
+          end
         end
       end
     end
@@ -120,6 +122,7 @@ class Packager
           system('sed -i.bak "s!{{cpkg_version}}!%s!g" %s' % [@version, file])
           system('sed -i.bak "s!{{cpkg_tarball}}!%s!g" %s' % [tarball, file])
           system('sed -i.bak "s!{{cpkg_source_dir}}!%s!g" %s' % [source_dir, file])
+          system('sed -i.bak "s!{{cpkg_date}}!%s!g" %s' % [Time.now.strftime("%a, %d %b %Y %H:%M:%S %z"), file])
 
           @props.each do |name, value|
             system('sed -i.bak "s!{{cpkg_%s}}!%s!g" %s' % [name, value, file])
@@ -202,7 +205,7 @@ class Packager
     end
 
     def template_conf
-      YAML.load(File.read(template_conf_file))
+      @__tc ||= YAML.load(File.read(template_conf_file))
     end
 
     def template_conf_file
