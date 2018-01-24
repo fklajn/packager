@@ -1,0 +1,27 @@
+FROM debian:stretch
+
+RUN apt-get update && apt-get install -y \
+    dpkg-dev \
+    wget \
+    ruby \
+    rake \
+    debhelper \
+    dh-systemd
+
+RUN wget -q https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz && \
+    rm -f go1.9.2.linux-amd64.tar.gz
+
+WORKDIR /build/source
+
+VOLUME /go
+VOLUME /build/artifacts
+
+ENV RUBYLIB /packager/lib
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin
+ENV GOPATH /go
+
+COPY lib /packager/lib/
+COPY bin /packager/bin/
+
+CMD /packager/bin/packager.rb
