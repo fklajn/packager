@@ -3,9 +3,9 @@ FROM centos:7
 RUN yum install -y rpm-build ruby wget && \
     yum clean all
 
-RUN wget -q https://dl.google.com/go/go1.9.2.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz && \
-    rm -f go1.9.2.linux-amd64.tar.gz
+RUN wget -q https://dl.google.com/go/go1.10.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.10.linux-amd64.tar.gz && \
+    rm -f go1.10.linux-amd64.tar.gz
 
 WORKDIR /build/source
 
