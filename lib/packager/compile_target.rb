@@ -16,6 +16,7 @@ class Packager
       @flags = props["flags"] || {}
       @tags = props["tags"] || []
       @precommands = props["pre"] || []
+      @postcommands = props["post"] || []
 
       @time = Time.now.strftime("%F %T %z")
       @buildid = OpenSSL::Random.random_bytes(16).unpack("H*")[0]
@@ -75,6 +76,17 @@ class Packager
       system("ls -l %s" % output)
       system("file %s" % output)
       system("ldd %s" % output)
+      puts
+
+      @postcommands.each do |cmd|
+        parsed = cmd.gsub("{{output}}", fqoutput)
+
+        puts "     >>> running post command: %s" % parsed
+        unless system(parsed)
+          raise("post command %s failed with exit code %d" % [parsed, $?.exitstatus])
+        end
+      end
+
       puts
       puts "   >>> built %s" % fqoutput
     end
