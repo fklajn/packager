@@ -17,6 +17,7 @@ class Packager
       @tags = props["tags"] || []
       @precommands = props["pre"] || []
       @postcommands = props["post"] || []
+      @build_package = props["build_package"]
 
       @time = Time.now.strftime("%F %T %z")
       @buildid = OpenSSL::Random.random_bytes(16).unpack("H*")[0]
@@ -156,6 +157,7 @@ class Packager
       args << "-o" << output
       args << "--tags" << @tags.join(",") unless @tags.empty?
       args << "-ldflags" << "'%s'" % flags.join(" ") unless flags.empty?
+      args << @build_package if @build_package
 
       ["go", "build", *args]
     end
