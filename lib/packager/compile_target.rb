@@ -18,6 +18,7 @@ class Packager
       @precommands = props["pre"] || []
       @postcommands = props["post"] || []
       @build_package = props["build_package"]
+      @env = props["environment"] || {}
 
       @time = Time.now.strftime("%F %T %z")
       @buildid = OpenSSL::Random.random_bytes(16).unpack("H*")[0]
@@ -64,6 +65,10 @@ class Packager
 
       ENV["GOOS"] = @os.to_s
       ENV["GOARCH"] = @arch.to_s
+
+      @env.each do |k, v|
+        ENV[k] = v
+      end
 
       unless system(cmd)
         raise("Could not build %s: exited %d" % [self, $?.exitstatus])
