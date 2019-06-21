@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM ubuntu:16.04
 
 RUN apt-get update && apt-get install -y \
     dpkg-dev \
@@ -8,9 +8,9 @@ RUN apt-get update && apt-get install -y \
     debhelper \
     dh-systemd
 
-RUN wget -q https://dl.google.com/go/go1.10.7.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.10.7.linux-amd64.tar.gz && \
-    rm -f go1.10.7.linux-amd64.tar.gz
+RUN wget -q https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.12.6.linux-amd64.tar.gz && \
+    rm -f go1.12.6.linux-amd64.tar.gz
 
 WORKDIR /build/source
 
