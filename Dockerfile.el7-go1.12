@@ -1,6 +1,6 @@
 FROM centos:7
 
-RUN yum install -y rpm-build ruby wget && \
+RUN yum install -y rpm-build ruby wget gcc && \
     yum clean all
 
 RUN wget -q https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz && \
