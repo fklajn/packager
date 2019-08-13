@@ -1,0 +1,3 @@
+FROM circleci/golang:1.12
+
+RUN sudo apt-get install libsofthsm2
