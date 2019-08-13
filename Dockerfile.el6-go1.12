@@ -1,6 +1,7 @@
 FROM centos:6
 
-RUN yum install -y rpm-build ruby wget gcc && \
+RUN rpm -ivh http://opensource.wandisco.com/centos/6/git/x86_64/wandisco-git-release-6-1.noarch.rpm && \
+    yum install -y rpm-build ruby wget gcc git && \
     yum clean all
 
 RUN wget -q https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz && \
@@ -15,6 +16,7 @@ VOLUME /build/artifacts
 ENV RUBYLIB /packager/lib
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin
 ENV GOPATH /go
+ENV GO111MODULE on
 
 COPY lib /packager/lib/
 COPY bin /packager/bin/

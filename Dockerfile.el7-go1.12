@@ -1,6 +1,6 @@
 FROM centos:7
 
-RUN yum install -y rpm-build ruby wget gcc softhsm && \
+RUN yum install -y rpm-build ruby wget gcc softhsm git && \
     yum clean all
 
 RUN wget -q https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz && \
@@ -15,6 +15,7 @@ VOLUME /build/artifacts
 ENV RUBYLIB /packager/lib
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin
 ENV GOPATH /go
+ENV GO111MODULE on
 
 COPY lib /packager/lib/
 COPY bin /packager/bin/
