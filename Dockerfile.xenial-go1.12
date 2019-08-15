@@ -9,9 +9,9 @@ RUN apt-get update && apt-get install -y \
     git \
     dh-systemd
 
-RUN wget -q https://dl.google.com/go/go1.12.6.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.12.6.linux-amd64.tar.gz && \
-    rm -f go1.12.6.linux-amd64.tar.gz
+RUN wget -q https://dl.google.com/go/go1.12.8.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.12.8.linux-amd64.tar.gz && \
+    rm -f go1.12.8.linux-amd64.tar.gz
 
 WORKDIR /build/source
 
