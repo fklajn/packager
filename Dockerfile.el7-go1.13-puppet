@@ -1,11 +1,11 @@
 FROM centos:7
 
-RUN yum install -y rpm-build ruby wget git rubygem-rake docker-client && \
+RUN yum install -y rpm-build ruby wget git rubygem-rake docker-client gcc softhsm && \
     yum clean all
 
-RUN wget -q https://dl.google.com/go/go1.13.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz && \
-    rm -f go1.13.linux-amd64.tar.gz
+RUN wget -q https://dl.google.com/go/go1.13.6.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.13.6.linux-amd64.tar.gz && \
+    rm -f go1.13.6.linux-amd64.tar.gz
 
 RUN rpm -ivh http://yum.puppetlabs.com/puppet5/el/7/x86_64/puppet-agent-5.5.1-1.el7.x86_64.rpm
 

@@ -4,9 +4,9 @@ RUN rpm -ivh http://opensource.wandisco.com/centos/6/git/x86_64/wandisco-git-rel
     yum install -y rpm-build ruby wget gcc git && \
     yum clean all
 
-RUN wget -q https://dl.google.com/go/go1.13.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.13.linux-amd64.tar.gz && \
-    rm -f go1.13.linux-amd64.tar.gz
+RUN wget -q https://dl.google.com/go/go1.13.6.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.13.6.linux-amd64.tar.gz && \
+    rm -f go1.13.6.linux-amd64.tar.gz
 
 WORKDIR /build/source
 
