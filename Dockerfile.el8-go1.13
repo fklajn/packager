@@ -6,9 +6,9 @@ RUN yum install -y rpm-build ruby wget gcc git && \
 # bit weird, this clearly exist but yum aint finding it in current metadata, probably a fix soon
 RUN yum install -y http://mirror.centos.org/centos-8/8.0.1905/AppStream/x86_64/os/Packages/softhsm-2.4.0-2.module_el8.0.0+79+bbd20d7b.x86_64.rpm
 
-RUN wget -q https://dl.google.com/go/go1.13.6.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.13.6.linux-amd64.tar.gz && \
-    rm -f go1.13.6.linux-amd64.tar.gz
+RUN wget -q https://dl.google.com/go/go1.13.7.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.13.7.linux-amd64.tar.gz && \
+    rm -f go1.13.7.linux-amd64.tar.gz
 
 WORKDIR /build/source
 
