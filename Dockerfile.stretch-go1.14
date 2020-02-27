@@ -1,4 +1,6 @@
-FROM ubuntu:16.04
+FROM debian:stretch
+
+ENV GOVERSION 1.14
 
 RUN apt-get update && apt-get install -y \
     dpkg-dev \
@@ -7,11 +9,13 @@ RUN apt-get update && apt-get install -y \
     rake \
     debhelper \
     git \
-    dh-systemd
+    dh-systemd \
+    msitools \
+    wixl
 
-RUN wget -q https://dl.google.com/go/go1.13.7.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.13.7.linux-amd64.tar.gz && \
-    rm -f go1.13.7.linux-amd64.tar.gz
+RUN wget -q https://dl.google.com/go/go${GOVERSION}.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go${GOVERSION}.linux-amd64.tar.gz && \
+    rm -f go${GOVERSION}.linux-amd64.tar.gz
 
 WORKDIR /build/source
 
