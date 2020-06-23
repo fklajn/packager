@@ -2,12 +2,13 @@ require "openssl"
 
 class Packager
   class CompileTarget
-    attr_accessor :os, :arch, :name
+    attr_accessor :os, :arch, :arm, :name
 
     def initialize(name, version, props, workdir, defaults={}, flagsmap={})
       @name = name
       @os = props["os"]
       @arch = props["arch"]
+      @arm = props["arm"]
       @workdir = workdir
 
       props = defaults.merge(props)
@@ -65,6 +66,7 @@ class Packager
 
       ENV["GOOS"] = @os.to_s
       ENV["GOARCH"] = @arch.to_s
+      ENV["GOARM"] = @arm.to_s if @arm
 
       @env.each do |k, v|
         ENV[k] = v
@@ -126,6 +128,9 @@ class Packager
 
       out.gsub!("{{arch}}", @arch.to_s.downcase)
       out.gsub!("{{ARCH}}", @arch.to_s.upcase)
+
+      out.gsub!("{{arm}}", @arm.to_s.downcase)
+      out.gsub!("{{ARM}}", @arm.to_s.upcase)
 
       out.gsub!("{{sha}}", sha)
       out.gsub!("{{SHA}}", sha.upcase)
