@@ -1,10 +1,10 @@
 FROM centos:8
 
-ENV GOVERSION 1.14
+ENV GOVERSION 1.14.4
 
-RUN yum install -y rpm-build ruby wget gcc git softhsm && \
+RUN yum module enable -y idm:DL1 && \
+    yum install -y rpm-build ruby wget gcc git softhsm softhsm-devel && \
     yum clean all
-
 
 RUN wget -q https://dl.google.com/go/go${GOVERSION}.linux-amd64.tar.gz && \
     tar -C /usr/local -xzf go${GOVERSION}.linux-amd64.tar.gz && \
