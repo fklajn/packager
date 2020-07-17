@@ -1,6 +1,6 @@
 FROM centos:7
 
-ENV GOVERSION 1.14.4
+ENV GOVERSION 1.14.6
 
 RUN yum install -y rpm-build ruby wget git rubygem-rake docker-client gcc softhsm && \
     yum clean all
