@@ -1,6 +1,6 @@
 FROM centos:7
 
-ENV GOVERSION 1.14.6
+ENV GOVERSION 1.14.10
 
 RUN yum install -y rpm-build ruby wget gcc softhsm git && \
     yum clean all

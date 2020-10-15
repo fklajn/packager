@@ -1,6 +1,6 @@
 FROM centos:6
 
-ENV GOVERSION 1.14.6
+ENV GOVERSION 1.14.10
 
 RUN rpm -ivh http://opensource.wandisco.com/centos/6/git/x86_64/wandisco-git-release-6-1.noarch.rpm && \
     yum install -y rpm-build ruby wget gcc git && \

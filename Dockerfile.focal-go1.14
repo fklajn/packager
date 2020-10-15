@@ -1,6 +1,7 @@
 FROM ubuntu:focal
 
-ENV GOVERSION 1.14.6
+ENV GOVERSION 1.14.10
+
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     dpkg-dev \

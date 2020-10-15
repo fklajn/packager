@@ -1,6 +1,6 @@
 FROM centos:8
 
-ENV GOVERSION 1.14.6
+ENV GOVERSION 1.14.10
 
 RUN yum module enable -y idm:DL1 && \
     yum install -y rpm-build ruby wget gcc git softhsm softhsm-devel && \
