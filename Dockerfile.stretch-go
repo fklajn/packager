@@ -1,6 +1,6 @@
-FROM debian:buster
+FROM debian:stretch
 
-:%s/GOVERSION 1.14.10
+ARG GOVERSION="1.14.10"
 
 RUN apt-get update && apt-get install -y \
     dpkg-dev \

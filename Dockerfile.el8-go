@@ -1,15 +1,14 @@
-FROM centos:7
+FROM centos:8
 
-ENV GOVERSION 1.14.10
+ARG GOVERSION="1.14.10"
 
-RUN yum install -y rpm-build ruby wget git rubygem-rake docker-client gcc softhsm && \
+RUN yum module enable -y idm:DL1 && \
+    yum install -y rpm-build ruby wget gcc git softhsm softhsm-devel && \
     yum clean all
 
 RUN wget -q https://dl.google.com/go/go${GOVERSION}.linux-amd64.tar.gz && \
     tar -C /usr/local -xzf go${GOVERSION}.linux-amd64.tar.gz && \
     rm -f go${GOVERSION}.linux-amd64.tar.gz
-
-RUN rpm -ivh http://yum.puppetlabs.com/puppet5/el/7/x86_64/puppet-agent-5.5.1-1.el7.x86_64.rpm
 
 WORKDIR /build/source
 
