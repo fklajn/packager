@@ -1,0 +1,5 @@
+ARG GOVERSION="1.14.10"
+
+FROM circleci/golang:${GOVERSION}
+
+RUN sudo apt-get install libsofthsm2 msitools
