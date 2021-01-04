@@ -11,7 +11,7 @@ task :build do
 
     if tag
       sh "docker build -f %s %s --build-arg GOVERSION=%s --tag choria/packager:%s-%s ." % [file, nocache, GOVERSION, tag, _TAGVERSION]
-      sh "docker push choria/packager:%s" % tag
+      sh "docker push choria/packager:%s-%s" % [tag, _TAGVERSION]
     end
   end
 end
