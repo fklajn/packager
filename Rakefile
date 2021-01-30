@@ -1,6 +1,6 @@
 desc "Builds and pushes all dockerfiles"
 
-GOVERSION="1.14.10"
+GOVERSION="1.15.7"
 
 _TAGVERSION=GOVERSION.split('.')[0,2].join('.')
 
@@ -10,8 +10,8 @@ task :build do
     nocache = ENV["NOCACHE"] ? "--no-cache" : ""
 
     if tag
-      sh "docker build -f %s %s --build-arg GOVERSION=%s --tag choria/packager:%s-%s ." % [file, nocache, GOVERSION, tag, _TAGVERSION]
-      sh "docker push choria/packager:%s" % tag
+      sh "docker build -f %s %s --build-arg GOVERSION=%s --tag choria/packager:%s%s ." % [file, nocache, GOVERSION, tag, _TAGVERSION]
+      sh "docker push choria/packager:%s%s" % [tag, _TAGVERSION]
     end
   end
 end
