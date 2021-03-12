@@ -1,6 +1,6 @@
 desc "Builds and pushes all dockerfiles"
 
-GOVERSION="1.15.7"
+GOVERSION="1.16.2"
 
 _TAGVERSION=GOVERSION.split('.')[0,2].join('.')
 
