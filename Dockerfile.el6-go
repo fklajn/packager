@@ -1,0 +1,28 @@
+FROM centos:6
+
+ARG GOVERSION="1.14.10"
+
+COPY c6-vault.repo /etc/yum.repos.d
+
+RUN yum install -y rpm-build ruby wget gcc softhsm git --disablerepo=* --enablerepo=C6.10* && \
+    yum clean all
+
+RUN wget -q https://dl.google.com/go/go${GOVERSION}.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go${GOVERSION}.linux-amd64.tar.gz && \
+    rm -f go${GOVERSION}.linux-amd64.tar.gz && \
+    rm -f /usr/local/go/pkg/linux_amd64/runtime/cgo.a
+
+WORKDIR /build/source
+
+VOLUME /go
+VOLUME /build/artifacts
+
+ENV RUBYLIB /packager/lib
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin
+ENV GOPATH /go
+ENV GO111MODULE on
+
+COPY lib /packager/lib/
+COPY bin /packager/bin/
+
+CMD /packager/bin/packager.rb

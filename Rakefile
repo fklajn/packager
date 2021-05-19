@@ -5,7 +5,7 @@ GOVERSION="1.16.4"
 _TAGVERSION=GOVERSION.split('.')[0,2].join('.')
 
 task :build do
-  Dir.glob("Dockerfile.*") do |file|
+  Dir.glob("Dockerfile.el6-go") do |file|
     tag = file.split(/Dockerfile\./).last
     nocache = ENV["NOCACHE"] ? "--no-cache" : ""
 
