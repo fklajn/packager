@@ -1,0 +1,32 @@
+FROM debian:bullseye
+
+ARG GOVERSION="1.14.10"
+
+RUN apt-get update && apt-get install -y \
+    dpkg-dev \
+    wget \
+    ruby \
+    rake \
+    debhelper \
+    git \
+    msitools \
+    wixl
+
+RUN wget -q https://dl.google.com/go/go${GOVERSION}.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go${GOVERSION}.linux-amd64.tar.gz && \
+    rm -f go${GOVERSION}.linux-amd64.tar.gz
+
+WORKDIR /build/source
+
+VOLUME /go
+VOLUME /build/artifacts
+
+ENV RUBYLIB /packager/lib
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin
+ENV GOPATH /go
+ENV GO111MODULE on
+
+COPY lib /packager/lib/
+COPY bin /packager/bin/
+
+CMD /packager/bin/packager.rb
